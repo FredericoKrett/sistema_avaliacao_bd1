@@ -56,6 +56,36 @@ public class RelatorioDAO {
         return paraCamelCase(jdbc.queryForList(sql, params));
     }
 
+    public List<Map<String, Object>> evolucaoAluno(int idUsuario) {
+        String sql = """
+                SELECT
+                    a.id_avaliacao,
+                    a.titulo,
+                    a.data_inicio,
+                    u.nome AS aluno,
+                    u.turma,
+                    ROUND(SUM(COALESCE(r.nota_obtida, 0)), 2) AS nota_aluno,
+                    ROUND((
+                        SELECT AVG(sub.nota_total)
+                        FROM (
+                            SELECT r2.id_usuario, SUM(COALESCE(r2.nota_obtida, 0)) AS nota_total
+                            FROM resposta r2
+                            INNER JOIN usuario u2 ON u2.id_usuario = r2.id_usuario
+                            WHERE r2.id_avaliacao = a.id_avaliacao
+                              AND u2.turma = u.turma
+                            GROUP BY r2.id_usuario
+                        ) sub
+                    ), 2) AS media_turma
+                FROM resposta r
+                INNER JOIN avaliacao a ON a.id_avaliacao = r.id_avaliacao
+                INNER JOIN usuario u ON u.id_usuario = r.id_usuario
+                WHERE u.id_usuario = :idUsuario
+                GROUP BY a.id_avaliacao, a.titulo, a.data_inicio, u.nome, u.turma
+                ORDER BY a.data_inicio ASC
+                """;
+        return paraCamelCase(jdbc.queryForList(sql, new MapSqlParameterSource("idUsuario", idUsuario)));
+    }
+
     private List<String> listarTurmas() {
         return jdbc.getJdbcTemplate().queryForList(
                 "SELECT DISTINCT turma FROM usuario WHERE turma IS NOT NULL", String.class);

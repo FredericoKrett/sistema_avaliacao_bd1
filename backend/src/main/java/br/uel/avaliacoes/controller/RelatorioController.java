@@ -29,4 +29,9 @@ public class RelatorioController {
             @RequestParam(required = false) List<String> turmas) {
         return relatorioDAO.mediaPorAvaliacao(inicio.atStartOfDay(), fim.atTime(23, 59, 59), turmas);
     }
+
+    @GetMapping("/2")
+    public List<Map<String, Object>> evolucaoAluno(@RequestParam int idUsuario) {
+        return relatorioDAO.evolucaoAluno(idUsuario);
+    }
 }
