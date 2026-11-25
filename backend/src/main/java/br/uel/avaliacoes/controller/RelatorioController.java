@@ -39,4 +39,11 @@ public class RelatorioController {
     public List<Map<String, Object>> questoesMaisErradas(@RequestParam(required = false) String busca) {
         return relatorioDAO.questoesMaisErradas(busca);
     }
+
+    @GetMapping("/4")
+    public Map<String, Object> alunosPendentes(@RequestParam(required = false) Integer idAvaliacao) {
+        return Map.of(
+                "pendentes", relatorioDAO.alunosPendentes(idAvaliacao),
+                "resumo", relatorioDAO.resumoEntregas());
+    }
 }

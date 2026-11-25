@@ -112,6 +112,47 @@ public class RelatorioDAO {
         return paraCamelCase(jdbc.queryForList(sql, new MapSqlParameterSource("busca", filtro)));
     }
 
+    public List<Map<String, Object>> alunosPendentes(Integer idAvaliacao) {
+        String sql = """
+                SELECT
+                    a.id_avaliacao,
+                    a.titulo,
+                    u.id_usuario,
+                    u.nome AS aluno,
+                    u.turma,
+                    CASE
+                        WHEN ua.data_entrega IS NULL THEN 'PENDENTE'
+                        ELSE 'ENTREGUE'
+                    END AS status_entrega,
+                    COUNT(r.id_resposta) AS questoes_respondidas
+                FROM usuario_avaliacao ua
+                INNER JOIN avaliacao a ON a.id_avaliacao = ua.id_avaliacao
+                INNER JOIN usuario u ON u.id_usuario = ua.id_usuario
+                LEFT JOIN resposta r ON r.id_usuario = ua.id_usuario AND r.id_avaliacao = ua.id_avaliacao
+                WHERE ua.data_entrega IS NULL
+                  AND (CAST(:idAvaliacao AS INTEGER) IS NULL OR a.id_avaliacao = :idAvaliacao)
+                GROUP BY a.id_avaliacao, a.titulo, u.id_usuario, u.nome, u.turma, ua.data_entrega
+                ORDER BY a.id_avaliacao ASC, u.turma ASC, u.nome ASC
+                """;
+        return paraCamelCase(jdbc.queryForList(sql, new MapSqlParameterSource("idAvaliacao", idAvaliacao)));
+    }
+
+    public List<Map<String, Object>> resumoEntregas() {
+        String sql = """
+                SELECT
+                    a.id_avaliacao,
+                    a.titulo,
+                    COUNT(ua.id_usuario) AS total_atribuidos,
+                    COUNT(ua.data_entrega) AS total_entregues,
+                    COUNT(ua.id_usuario) - COUNT(ua.data_entrega) AS total_pendentes
+                FROM avaliacao a
+                LEFT JOIN usuario_avaliacao ua ON ua.id_avaliacao = a.id_avaliacao
+                GROUP BY a.id_avaliacao, a.titulo
+                ORDER BY a.data_inicio ASC
+                """;
+        return paraCamelCase(jdbc.getJdbcTemplate().queryForList(sql));
+    }
+
     private List<String> listarTurmas() {
         return jdbc.getJdbcTemplate().queryForList(
                 "SELECT DISTINCT turma FROM usuario WHERE turma IS NOT NULL", String.class);
