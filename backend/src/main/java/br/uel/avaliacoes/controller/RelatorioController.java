@@ -34,4 +34,9 @@ public class RelatorioController {
     public List<Map<String, Object>> evolucaoAluno(@RequestParam int idUsuario) {
         return relatorioDAO.evolucaoAluno(idUsuario);
     }
+
+    @GetMapping("/3")
+    public List<Map<String, Object>> questoesMaisErradas(@RequestParam(required = false) String busca) {
+        return relatorioDAO.questoesMaisErradas(busca);
+    }
 }

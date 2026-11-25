@@ -86,6 +86,32 @@ public class RelatorioDAO {
         return paraCamelCase(jdbc.queryForList(sql, new MapSqlParameterSource("idUsuario", idUsuario)));
     }
 
+    public List<Map<String, Object>> questoesMaisErradas(String busca) {
+        String sql = """
+                SELECT
+                    RANK() OVER (ORDER BY
+                        ROUND(100.0 * SUM(CASE WHEN COALESCE(r.nota_obtida, 0) < aq.valor THEN 1 ELSE 0 END) / COUNT(*), 2) DESC,
+                        COUNT(*) DESC
+                    ) AS posicao,
+                    q.id_questao,
+                    q.enunciado,
+                    q.tipo,
+                    COUNT(*) AS total_respostas,
+                    SUM(CASE WHEN COALESCE(r.nota_obtida, 0) < aq.valor THEN 1 ELSE 0 END) AS total_erros_ou_parciais,
+                    ROUND(100.0 * SUM(CASE WHEN COALESCE(r.nota_obtida, 0) < aq.valor THEN 1 ELSE 0 END) / COUNT(*), 2) AS percentual_erro
+                FROM questao q
+                INNER JOIN avaliacao_questao aq ON aq.id_questao = q.id_questao
+                INNER JOIN resposta r ON r.id_avaliacao = aq.id_avaliacao AND r.id_questao = aq.id_questao
+                WHERE LOWER(q.enunciado) LIKE :busca
+                GROUP BY q.id_questao, q.enunciado, q.tipo
+                HAVING COUNT(*) >= 1
+                ORDER BY percentual_erro DESC, total_respostas DESC
+                FETCH FIRST 10 ROWS ONLY
+                """;
+        String filtro = busca == null ? "%" : "%" + busca.toLowerCase() + "%";
+        return paraCamelCase(jdbc.queryForList(sql, new MapSqlParameterSource("busca", filtro)));
+    }
+
     private List<String> listarTurmas() {
         return jdbc.getJdbcTemplate().queryForList(
                 "SELECT DISTINCT turma FROM usuario WHERE turma IS NOT NULL", String.class);
