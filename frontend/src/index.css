@@ -10,3 +10,11 @@ main {
   margin: 0 auto;
   padding: 24px 16px;
 }
+
+.ok {
+  color: #1b7a3d;
+}
+
+.erro {
+  color: #b3261e;
+}
