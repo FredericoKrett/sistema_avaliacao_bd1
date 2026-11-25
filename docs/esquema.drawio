@@ -1,0 +1,193 @@
+<mxfile host="app.diagrams.net" agent="Draw.io">
+  <diagram id="esquema-relacional-bd1" name="Esquema Relacional (3FN)">
+    <mxGraphModel dx="2260" dy="965" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tb_usuario" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="USUARIO" vertex="1">
+          <mxGeometry height="180" width="260" x="60" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="u_pk" parent="tb_usuario" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK  |  &lt;u&gt;id_usuario&lt;/u&gt; : SERIAL" vertex="1">
+          <mxGeometry height="25" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="u_c1" parent="tb_usuario" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  nome : VARCHAR(100)" vertex="1">
+          <mxGeometry height="25" width="260" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="u_c2" parent="tb_usuario" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  email : VARCHAR(120) [UNIQUE]" vertex="1">
+          <mxGeometry height="25" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="u_c3" parent="tb_usuario" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  senha : VARCHAR(100)" vertex="1">
+          <mxGeometry height="25" width="260" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="u_c4" parent="tb_usuario" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  papel : VARCHAR(20)" vertex="1">
+          <mxGeometry height="25" width="260" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="u_c5" parent="tb_usuario" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  turma : VARCHAR(30)" vertex="1">
+          <mxGeometry height="25" width="260" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="tb_ua" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="USUARIO_AVALIACAO" vertex="1">
+          <mxGeometry height="105" width="280" x="440" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ua_fk1" parent="tb_ua" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK, FK  |  &lt;u&gt;id_usuario&lt;/u&gt; : INTEGER" vertex="1">
+          <mxGeometry height="25" width="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ua_fk2" parent="tb_ua" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK, FK  |  &lt;u&gt;id_avaliacao&lt;/u&gt; : INTEGER" vertex="1">
+          <mxGeometry height="25" width="280" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="ua_c1" parent="tb_ua" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="            |  data_entrega : TIMESTAMP" vertex="1">
+          <mxGeometry height="25" width="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tb_avaliacao" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="AVALIACAO" vertex="1">
+          <mxGeometry height="180" width="280" x="440" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="av_pk" parent="tb_avaliacao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK  |  &lt;u&gt;id_avaliacao&lt;/u&gt; : SERIAL" vertex="1">
+          <mxGeometry height="25" width="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="av_c1" parent="tb_avaliacao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  titulo : VARCHAR(150)" vertex="1">
+          <mxGeometry height="25" width="280" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="av_c2" parent="tb_avaliacao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  descricao : TEXT" vertex="1">
+          <mxGeometry height="25" width="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="av_c3" parent="tb_avaliacao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  data_inicio : TIMESTAMP" vertex="1">
+          <mxGeometry height="25" width="280" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="av_c4" parent="tb_avaliacao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  data_fim : TIMESTAMP" vertex="1">
+          <mxGeometry height="25" width="280" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="av_fk1" parent="tb_avaliacao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" value="FK  |  id_criador : INTEGER" vertex="1">
+          <mxGeometry height="25" width="280" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="tb_aq" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="AVALIACAO_QUESTAO" vertex="1">
+          <mxGeometry height="130" width="280" x="830" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="aq_fk1" parent="tb_aq" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK, FK  |  &lt;u&gt;id_avaliacao&lt;/u&gt; : INTEGER" vertex="1">
+          <mxGeometry height="25" width="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aq_fk2" parent="tb_aq" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK, FK  |  &lt;u&gt;id_questao&lt;/u&gt; : INTEGER" vertex="1">
+          <mxGeometry height="25" width="280" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="aq_c1" parent="tb_aq" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="            |  ordem : INTEGER" vertex="1">
+          <mxGeometry height="25" width="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aq_c2" parent="tb_aq" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;" value="            |  valor : NUMERIC(5,2)" vertex="1">
+          <mxGeometry height="25" width="280" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="tb_questao" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="QUESTAO" vertex="1">
+          <mxGeometry height="105" width="260" x="1220" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="q_pk" parent="tb_questao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK  |  &lt;u&gt;id_questao&lt;/u&gt; : SERIAL" vertex="1">
+          <mxGeometry height="25" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="q_c1" parent="tb_questao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  enunciado : TEXT" vertex="1">
+          <mxGeometry height="25" width="260" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="q_c2" parent="tb_questao" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  tipo : VARCHAR(20)" vertex="1">
+          <mxGeometry height="25" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tb_alternativa" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="ALTERNATIVA" vertex="1">
+          <mxGeometry height="155" width="260" x="1230" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_pk" parent="tb_alternativa" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK  |  &lt;u&gt;id_alternativa&lt;/u&gt; : SERIAL" vertex="1">
+          <mxGeometry height="25" width="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_fk1" parent="tb_alternativa" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" value="FK  |  id_questao : INTEGER" vertex="1">
+          <mxGeometry height="25" width="260" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_c1" parent="tb_alternativa" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  letra : CHAR(1)" vertex="1">
+          <mxGeometry height="25" width="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_c2" parent="tb_alternativa" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  texto : TEXT" vertex="1">
+          <mxGeometry height="25" width="260" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_c3" parent="tb_alternativa" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  correta : BOOLEAN" vertex="1">
+          <mxGeometry height="25" width="260" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tb_resposta" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#FCFCFC;strokeColor=#000000;fontSize=13;" value="RESPOSTA" vertex="1">
+          <mxGeometry height="205" width="300" x="620" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="r_pk" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;html=1;" value="PK  |  &lt;u&gt;id_resposta&lt;/u&gt; : SERIAL" vertex="1">
+          <mxGeometry height="25" width="300" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="r_fk1" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" value="FK1  |  id_usuario : INTEGER" vertex="1">
+          <mxGeometry height="25" width="300" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="r_fk2" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" value="FK1, FK2  |  id_avaliacao : INTEGER" vertex="1">
+          <mxGeometry height="25" width="300" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="r_fk3" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" value="FK2, FK3  |  id_questao : INTEGER" vertex="1">
+          <mxGeometry height="25" width="300" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="r_fk4" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" value="FK3  |  id_alternativa : INTEGER (NULL)" vertex="1">
+          <mxGeometry height="25" width="300" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="r_c1" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="      |  texto_resposta : TEXT (NULL)" vertex="1">
+          <mxGeometry height="25" width="300" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="r_c2" parent="tb_resposta" style="text;strokeColor=#000000;fillColor=#FCFCFC;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;" value="      |  nota_obtida : NUMERIC(5,2)" vertex="1">
+          <mxGeometry height="25" width="300" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="fk_av_u" edge="1" parent="1" source="av_fk1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="tb_usuario">
+          <mxGeometry relative="1" x="-0.1522" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="387.5" />
+              <mxPoint x="360" y="200" />
+              <mxPoint x="190" y="200" />
+            </Array>
+            <mxPoint x="320" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk_ua_u" edge="1" parent="1" source="ua_fk1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="tb_usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk_ua_av" edge="1" parent="1" source="ua_fk2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;entryX=0;entryY=0.102;entryDx=0;entryDy=0;entryPerimeter=0;" target="tb_avaliacao">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk_aq_av" edge="1" parent="1" source="aq_fk1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;entryX=0.999;entryY=0.085;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="tb_avaliacao">
+          <mxGeometry relative="1" x="-0.1999" as="geometry">
+            <Array as="points">
+              <mxPoint x="800" y="262.5" />
+              <mxPoint x="800" y="235.3" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk_aq_q" edge="1" parent="1" source="aq_fk2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;entryX=-0.001;entryY=0.173;entryDx=0;entryDy=0;entryPerimeter=0;" target="tb_questao">
+          <mxGeometry relative="1" x="-0.1793" as="geometry" />
+        </mxCell>
+        <mxCell id="fk_alt_q" edge="1" parent="1" source="tb_alternativa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="tb_questao">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fk_r_ua" edge="1" parent="1" source="tb_resposta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;exitX=0.5;exitY=0;entryX=1.007;entryY=0.143;fontStyle=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="tb_ua" value="FK1">
+          <mxGeometry relative="1" x="0.3636" as="geometry">
+            <mxPoint y="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="770" y="65" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk_r_aq" edge="1" parent="1" source="r_fk3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;exitX=1;exitY=0.5;entryX=0.5;entryY=1;fontStyle=1;" target="tb_aq" value="FK2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="597" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fk_r_alt" edge="1" parent="1" source="r_fk4" style="fontStyle=1;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;entryX=-0.004;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" target="tb_alternativa" value="FK3">
+          <mxGeometry relative="1" x="0.1362" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="622.5" />
+              <mxPoint x="1200" y="567.1" />
+            </Array>
+            <mxPoint x="1210" y="622.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="box_fks" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCFCFC;strokeColor=#000000;fontColor=#333333;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;spacingTop=6;fontSize=11;arcSize=5;" value="&lt;b&gt;Restrições compostas em RESPOSTA&lt;/b&gt;&lt;br&gt;FK1 (id_usuario, id_avaliacao) → USUARIO_AVALIACAO&lt;br&gt;FK2 (id_avaliacao, id_questao) → AVALIACAO_QUESTAO&lt;br&gt;FK3 (id_questao, id_alternativa) → ALTERNATIVA&lt;br&gt;UNIQUE (id_usuario, id_avaliacao, id_questao)&lt;br&gt;&lt;br&gt;&lt;b&gt;ALTERNATIVA&lt;/b&gt;&lt;br&gt;UNIQUE (id_questao, id_alternativa)&lt;br&gt;no máximo uma correta por questão" vertex="1">
+          <mxGeometry height="190" width="340" x="60" y="532.5" as="geometry" />
+        </mxCell>
+        <mxCell id="box_3fn" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCFCFC;strokeColor=#000000;fontColor=#333333;align=left;verticalAlign=middle;spacingLeft=15;spacingRight=15;fontSize=12;arcSize=8;" value="&lt;b&gt;Justificativa da Terceira Forma Normal (3FN):&lt;/b&gt;&lt;br&gt;O esquema relacional está na 3FN porque todos os atributos possuem valores atômicos e monovalorados (1FN), todos os atributos não-chave nas tabelas com chave primária composta (&lt;i&gt;AVALIACAO_QUESTAO&lt;/i&gt; e &lt;i&gt;USUARIO_AVALIACAO&lt;/i&gt;) dependem funcionalmente de toda a chave composta e não apenas de parte dela (2FN), e nenhuma tabela possui dependência transitiva entre atributos não-chave ou atributos derivados redundantes, como a nota total da avaliação, que é obtida pela soma de &lt;i&gt;nota_obtida&lt;/i&gt; em &lt;i&gt;RESPOSTA&lt;/i&gt; (3FN)." vertex="1">
+          <mxGeometry height="180" width="340" x="60" y="740" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
