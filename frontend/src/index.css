@@ -18,3 +18,72 @@ main {
 .erro {
   color: #b3261e;
 }
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #d8dcdf;
+  margin-bottom: 24px;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 340px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #d8dcdf;
+  border-radius: 8px;
+}
+
+.login h2 {
+  margin: 0 0 8px;
+}
+
+input {
+  padding: 8px 10px;
+  font-size: 15px;
+  border: 1px solid #b9bfc4;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 14px;
+  font-size: 15px;
+  border: 1px solid #1b5e9e;
+  border-radius: 4px;
+  background: #1f6fb8;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.usuario button {
+  background: #fff;
+  color: #1f6fb8;
+}
+
+.login button {
+  margin-top: 8px;
+}
+
+.status {
+  margin-top: 40px;
+  font-size: 13px;
+  color: #666;
+}
