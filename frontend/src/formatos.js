@@ -68,8 +68,5 @@ export function formatarDataHora(iso) {
 
 export function formatarPeriodo(inicio, fim) {
   if (!inicio || !fim) return '-'
-  if (inicio.slice(0, 10) === fim.slice(0, 10)) {
-    return `${isoParaBr(inicio)}, das ${inicio.slice(11, 16)} às ${fim.slice(11, 16)}`
-  }
-  return `${formatarDataHora(inicio)} até ${formatarDataHora(fim)}`
+  return `${isoParaBr(inicio)}, das ${inicio.slice(11, 16)} às ${fim.slice(11, 16)}`
 }
