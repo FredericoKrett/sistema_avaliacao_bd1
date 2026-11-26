@@ -99,8 +99,103 @@ button:disabled {
   color: #fff;
 }
 
+.abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid #d8dcdf;
+  margin-bottom: 16px;
+}
+
+.abas button {
+  background: transparent;
+  color: #444;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+}
+
+.abas button.ativo {
+  color: #1f6fb8;
+  border-bottom-color: #1f6fb8;
+}
+
+.descricao {
+  color: #555;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin: 12px 0 16px;
+}
+
+.filtros .opcao {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+select {
+  padding: 7px 8px;
+  font-size: 15px;
+  border: 1px solid #b9bfc4;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.grafico {
+  background: #fff;
+  border: 1px solid #d8dcdf;
+  border-radius: 8px;
+  padding: 16px 8px 8px;
+  margin-bottom: 16px;
+}
+
+.tabela {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #d8dcdf;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e3e6e8;
+}
+
+th {
+  font-size: 13px;
+  color: #555;
+  font-weight: 600;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .status {
   margin-top: 40px;
   font-size: 13px;
   color: #666;
+}
+
+.campo-data {
+  width: 7.5em;
 }

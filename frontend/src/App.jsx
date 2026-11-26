@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Login from './Login.jsx'
 import Menu from './Menu.jsx'
 import { telasDoUsuario } from './telas.js'
+import Relatorios from './relatorios/Relatorios.jsx'
 
 function lerUsuarioSalvo() {
   try {
@@ -56,7 +57,8 @@ function App() {
       {usuario && (
         <>
           <Menu usuario={usuario} telaAtual={tela} onTrocar={setTela} />
-          {telaAberta && (
+          {tela === 'relatorios' && <Relatorios />}
+          {telaAberta && tela !== 'relatorios' && (
             <section>
               <h2>{telaAberta.titulo}</h2>
               <p>Tela ainda não implementada.</p>

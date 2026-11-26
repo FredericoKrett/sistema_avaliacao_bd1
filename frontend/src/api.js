@@ -34,3 +34,55 @@ export async function login(email, senha) {
   }
   return dados
 }
+
+async function buscar(url, mock) {
+  let resposta
+  try {
+    resposta = await fetch(url)
+  } catch {
+    throw new Error('Não foi possível falar com o backend.')
+  }
+  if (resposta.status === 404 && mock) {
+    return mock()
+  }
+  const dados = await resposta.json().catch(() => ({}))
+  if (!resposta.ok) {
+    throw new Error(dados.erro || 'Erro ao carregar os dados.')
+  }
+  return dados
+}
+
+export function listarAlunos() {
+  return buscar('/api/usuarios?papel=ALUNO', () =>
+    usuariosMock
+      .filter((u) => u.papel === 'ALUNO')
+      .map((u) => {
+        const { senha: _, ...semSenha } = u
+        return semSenha
+      }),
+  )
+}
+
+export function relatorioMediaPorAvaliacao({ inicio, fim, turmas }) {
+  const params = new URLSearchParams()
+  if (inicio) params.set('inicio', inicio)
+  if (fim) params.set('fim', fim)
+  if (turmas.length > 0) params.set('turmas', turmas.join(','))
+  return buscar(`/api/relatorios/1?${params}`)
+}
+
+export function relatorioEvolucaoAluno(idUsuario) {
+  return buscar(`/api/relatorios/2?idUsuario=${encodeURIComponent(idUsuario)}`)
+}
+
+export function relatorioQuestoesMaisErradas(busca) {
+  const params = new URLSearchParams()
+  if (busca) params.set('busca', busca)
+  return buscar(`/api/relatorios/3?${params}`)
+}
+
+export function relatorioPendentes(idAvaliacao) {
+  const params = new URLSearchParams()
+  if (idAvaliacao) params.set('idAvaliacao', idAvaliacao)
+  return buscar(`/api/relatorios/4?${params}`)
+}
