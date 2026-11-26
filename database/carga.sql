@@ -188,7 +188,8 @@ INSERT INTO avaliacao (titulo, descricao, data_inicio, data_fim, id_criador) VAL
 ('Simulado - Geografia e Conhecimentos Gerais', 'Questoes gerais sobre continentes, capitais, oceanos e astronomia.', '2026-10-02 19:15:00', '2026-10-02 20:45:00', 1),
 ('Avaliacao 2 - Ciencias da Natureza', 'Avaliacao sobre elementos quimicos, estados fisicos, biologia e corpo humano.', '2026-10-20 19:15:00', '2026-10-20 21:15:00', 1),
 ('Quiz - Historia e Literatura', 'Avaliacao sobre historia geral, historia do Brasil e literatura.', '2026-11-05 14:00:00', '2026-11-05 15:30:00', 2),
-('Avaliacao Final - Informatica e Revisao Geral', 'Prova integradora cobrindo conceitos de informatica e revisao de temas anteriores.', '2026-11-18 19:15:00', '2026-11-18 21:15:00', 2);
+('Avaliacao Final - Informatica e Revisao Geral', 'Prova integradora cobrindo conceitos de informatica e revisao de temas anteriores.', '2026-11-18 19:15:00', '2026-11-18 21:15:00', 2),
+('Simulado - Revisao Geral', 'Simulado de revisao com questoes de todas as areas, aberto durante o dia 27/11.', '2026-11-27 08:00:00', '2026-11-27 23:59:00', 1);
 
 -- Composicao das avaliacoes (questoes, ordem e valor)
 INSERT INTO avaliacao_questao (id_avaliacao, id_questao, ordem, valor) VALUES
@@ -225,7 +226,13 @@ INSERT INTO avaliacao_questao (id_avaliacao, id_questao, ordem, valor) VALUES
 (5, 21, 3, 1.50),
 (5, 22, 4, 1.50),
 (5, 23, 5, 1.50),
-(5, 29, 6, 2.50);
+(5, 29, 6, 2.50),
+(6, 2, 1, 1.50),
+(6, 7, 2, 1.50),
+(6, 13, 3, 1.50),
+(6, 18, 4, 1.50),
+(6, 24, 5, 1.50),
+(6, 27, 6, 2.50);
 
 -- Designacao de usuarios por avaliacao
 INSERT INTO usuario_avaliacao (id_usuario, id_avaliacao, data_entrega) VALUES
@@ -296,7 +303,27 @@ INSERT INTO usuario_avaliacao (id_usuario, id_avaliacao, data_entrega) VALUES
 (13, 5, '2026-11-18 20:30:00'),
 (14, 5, '2026-11-18 20:40:00'),
 (15, 5, NULL),
-(16, 5, NULL);
+(16, 5, NULL),
+(3, 6, NULL),
+(4, 6, NULL),
+(5, 6, NULL),
+(6, 6, NULL),
+(7, 6, NULL),
+(8, 6, NULL),
+(9, 6, NULL),
+(10, 6, NULL),
+(11, 6, NULL),
+(12, 6, NULL),
+(13, 6, NULL),
+(14, 6, NULL),
+(15, 6, NULL),
+(16, 6, NULL),
+(17, 6, NULL),
+(18, 6, NULL),
+(19, 6, NULL),
+(20, 6, NULL),
+(21, 6, NULL),
+(22, 6, NULL);
 
 -- Respostas da Avaliacao 1
 INSERT INTO resposta (id_usuario, id_avaliacao, id_questao, id_alternativa, texto_resposta, nota_obtida) VALUES
@@ -621,18 +648,18 @@ INSERT INTO resposta (id_usuario, id_avaliacao, id_questao, id_alternativa, text
 (11, 5, 21, 82, NULL, 0.00),
 (11, 5, 22, 86, NULL, 1.50),
 (11, 5, 23, 89, NULL, 0.00),
-(11, 5, 29, NULL, 'Hardware sao pecas e software sao programas.', 2.00),
+(11, 5, 29, NULL, 'Hardware sao pecas e software sao programas.', NULL),
 
 (13, 5, 1, 1, NULL, 1.50),
 (13, 5, 12, 48, NULL, 1.50),
 (13, 5, 21, 81, NULL, 1.50),
 (13, 5, 22, 86, NULL, 1.50),
 (13, 5, 23, 91, NULL, 1.50),
-(13, 5, 29, NULL, 'Hardware e componente fisico (CPU) e software e programa (editor de texto).', 1.50),
+(13, 5, 29, NULL, 'Hardware e componente fisico (CPU) e software e programa (editor de texto).', NULL),
 
 (14, 5, 1, 1, NULL, 1.50),
 (14, 5, 12, 48, NULL, 1.50),
 (14, 5, 21, 81, NULL, 1.50),
 (14, 5, 22, 86, NULL, 1.50),
 (14, 5, 23, 91, NULL, 1.50),
-(14, 5, 29, NULL, 'Hardware sao os dispositivos fisicos (memoria RAM) e software os sistemas (Windows).', 2.20);
+(14, 5, 29, NULL, 'Hardware sao os dispositivos fisicos (memoria RAM) e software os sistemas (Windows).', NULL);
