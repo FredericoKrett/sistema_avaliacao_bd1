@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import Login from './Login.jsx'
+import Menu from './Menu.jsx'
+import { telasDoUsuario } from './telas.js'
 
 function lerUsuarioSalvo() {
   try {
@@ -11,6 +13,7 @@ function lerUsuarioSalvo() {
 
 function App() {
   const [usuario, setUsuario] = useState(lerUsuarioSalvo)
+  const [tela, setTela] = useState(() => (usuario ? telasDoUsuario(usuario)[0].id : null))
   const [health, setHealth] = useState(null)
   const [erro, setErro] = useState(null)
 
@@ -24,12 +27,16 @@ function App() {
   function entrar(usuarioLogado) {
     sessionStorage.setItem('usuario', JSON.stringify(usuarioLogado))
     setUsuario(usuarioLogado)
+    setTela(telasDoUsuario(usuarioLogado)[0].id)
   }
 
   function sair() {
     sessionStorage.removeItem('usuario')
     setUsuario(null)
+    setTela(null)
   }
+
+  const telaAberta = usuario ? telasDoUsuario(usuario).find((t) => t.id === tela) : null
 
   return (
     <main>
@@ -46,7 +53,17 @@ function App() {
       </header>
 
       {!usuario && <Login onEntrar={entrar} />}
-      {usuario && <p>Bem-vindo, {usuario.nome.split(' ')[0]}.</p>}
+      {usuario && (
+        <>
+          <Menu usuario={usuario} telaAtual={tela} onTrocar={setTela} />
+          {telaAberta && (
+            <section>
+              <h2>{telaAberta.titulo}</h2>
+              <p>Tela ainda não implementada.</p>
+            </section>
+          )}
+        </>
+      )}
 
       <footer className="status">
         {erro && <span className="erro">{erro}</span>}

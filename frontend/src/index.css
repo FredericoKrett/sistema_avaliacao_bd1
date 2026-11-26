@@ -82,6 +82,23 @@ button:disabled {
   margin-top: 8px;
 }
 
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.menu button {
+  background: #fff;
+  color: #1f6fb8;
+}
+
+.menu button.ativo {
+  background: #1f6fb8;
+  color: #fff;
+}
+
 .status {
   margin-top: 40px;
   font-size: 13px;
