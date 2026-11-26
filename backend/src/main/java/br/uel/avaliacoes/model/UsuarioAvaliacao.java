@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 public class UsuarioAvaliacao {
     private Integer idUsuario;
     private Integer idAvaliacao;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
     private LocalDateTime dataEntrega;
     private String nomeUsuario;
     private String turma;
@@ -29,6 +31,22 @@ public class UsuarioAvaliacao {
 
     public void setIdAvaliacao(Integer idAvaliacao) {
         this.idAvaliacao = idAvaliacao;
+    }
+
+    public LocalDateTime getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDateTime dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDateTime getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDateTime dataFim) {
+        this.dataFim = dataFim;
     }
 
     public LocalDateTime getDataEntrega() {

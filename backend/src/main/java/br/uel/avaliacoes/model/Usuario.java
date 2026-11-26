@@ -1,10 +1,15 @@
 package br.uel.avaliacoes.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Usuario {
     private Integer idUsuario;
     private String nome;
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
+
     private String papel;
     private String turma;
 

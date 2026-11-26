@@ -1,6 +1,9 @@
 package br.uel.avaliacoes.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Avaliacao {
     private Integer idAvaliacao;
@@ -10,6 +13,12 @@ public class Avaliacao {
     private LocalDateTime dataFim;
     private Integer idCriador;
     private String nomeCriador;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<AvaliacaoQuestao> questoes;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Integer> usuarios;
 
     public Avaliacao() {
     }
@@ -68,5 +77,21 @@ public class Avaliacao {
 
     public void setNomeCriador(String nomeCriador) {
         this.nomeCriador = nomeCriador;
+    }
+
+    public List<AvaliacaoQuestao> getQuestoes() {
+        return questoes;
+    }
+
+    public void setQuestoes(List<AvaliacaoQuestao> questoes) {
+        this.questoes = questoes;
+    }
+
+    public List<Integer> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Integer> usuarios) {
+        this.usuarios = usuarios;
     }
 }
