@@ -1,4 +1,4 @@
-import { usuariosMock } from './mock.js'
+import { questoesMock, usuariosMock } from './mock.js'
 
 function loginMock(email, senha) {
   const usuario = usuariosMock.find((u) => u.email === email && u.senha === senha)
@@ -50,6 +50,46 @@ async function buscar(url, mock) {
     throw new Error(dados.erro || 'Erro ao carregar os dados.')
   }
   return dados
+}
+
+async function enviar(url, metodo, corpo, mock) {
+  let resposta
+  try {
+    resposta = await fetch(url, {
+      method: metodo,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(corpo),
+    })
+  } catch {
+    throw new Error('Não foi possível falar com o backend.')
+  }
+  if (resposta.status === 404 && mock) {
+    return mock()
+  }
+  const dados = await resposta.json().catch(() => ({}))
+  if (!resposta.ok) {
+    throw new Error(dados.erro || 'Não foi possível salvar.')
+  }
+  return dados
+}
+
+export function listarQuestoes() {
+  return buscar('/api/questoes', () => structuredClone(questoesMock))
+}
+
+export function cadastrarQuestao(questao) {
+  return enviar('/api/questoes', 'POST', questao, () => {
+    const idQuestao = Math.max(0, ...questoesMock.map((q) => q.idQuestao)) + 1
+    const ultimaAlternativa = Math.max(0, ...questoesMock.flatMap((q) => q.alternativas.map((a) => a.idAlternativa)))
+    const nova = {
+      idQuestao,
+      enunciado: questao.enunciado,
+      tipo: questao.tipo,
+      alternativas: questao.alternativas.map((a, i) => ({ ...a, idAlternativa: ultimaAlternativa + i + 1, idQuestao })),
+    }
+    questoesMock.push(nova)
+    return structuredClone(nova)
+  })
 }
 
 export function listarAlunos() {

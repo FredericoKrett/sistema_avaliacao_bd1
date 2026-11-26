@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react'
 import Login from './Login.jsx'
 import Menu from './Menu.jsx'
 import { telasDoUsuario } from './telas.js'
+import Questoes from './questoes/Questoes.jsx'
 import Relatorios from './relatorios/Relatorios.jsx'
+
+const componentes = {
+  questoes: Questoes,
+  relatorios: Relatorios,
+}
 
 function lerUsuarioSalvo() {
   try {
@@ -38,6 +44,7 @@ function App() {
   }
 
   const telaAberta = usuario ? telasDoUsuario(usuario).find((t) => t.id === tela) : null
+  const Componente = telaAberta ? componentes[telaAberta.id] : null
 
   return (
     <main>
@@ -57,8 +64,8 @@ function App() {
       {usuario && (
         <>
           <Menu usuario={usuario} telaAtual={tela} onTrocar={setTela} />
-          {tela === 'relatorios' && <Relatorios />}
-          {telaAberta && tela !== 'relatorios' && (
+          {Componente && <Componente />}
+          {telaAberta && !Componente && (
             <section>
               <h2>{telaAberta.titulo}</h2>
               <p>Tela ainda não implementada.</p>
