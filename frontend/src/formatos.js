@@ -44,3 +44,32 @@ export function mascararData(texto) {
   if (digitos.length <= 4) return `${digitos.slice(0, 2)}/${digitos.slice(2)}`
   return `${digitos.slice(0, 2)}/${digitos.slice(2, 4)}/${digitos.slice(4)}`
 }
+
+export function mascararHora(texto) {
+  const digitos = texto.replace(/\D/g, '').slice(0, 4)
+  if (digitos.length <= 2) return digitos
+  return `${digitos.slice(0, 2)}:${digitos.slice(2)}`
+}
+
+export function horaValida(texto) {
+  const partes = /^(\d{2}):(\d{2})$/.exec(texto)
+  if (!partes) return null
+  const hora = Number(partes[1])
+  const minuto = Number(partes[2])
+  if (hora > 23 || minuto > 59) return null
+  return texto
+}
+
+export function formatarDataHora(iso) {
+  if (!iso) return '-'
+  const [, hora] = iso.split('T')
+  return `${isoParaBr(iso)} ${hora.slice(0, 5)}`
+}
+
+export function formatarPeriodo(inicio, fim) {
+  if (!inicio || !fim) return '-'
+  if (inicio.slice(0, 10) === fim.slice(0, 10)) {
+    return `${isoParaBr(inicio)}, das ${inicio.slice(11, 16)} às ${fim.slice(11, 16)}`
+  }
+  return `${formatarDataHora(inicio)} até ${formatarDataHora(fim)}`
+}

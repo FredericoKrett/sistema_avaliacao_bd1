@@ -1,4 +1,4 @@
-import { questoesMock, usuariosMock } from './mock.js'
+import { avaliacoesMock, questoesMock, usuariosMock } from './mock.js'
 
 function loginMock(email, senha) {
   const usuario = usuariosMock.find((u) => u.email === email && u.senha === senha)
@@ -89,6 +89,68 @@ export function cadastrarQuestao(questao) {
     }
     questoesMock.push(nova)
     return structuredClone(nova)
+  })
+}
+
+function avaliacaoMock(idAvaliacao) {
+  const avaliacao = avaliacoesMock.find((a) => a.idAvaliacao === Number(idAvaliacao))
+  if (!avaliacao) {
+    throw new Error('Avaliação não encontrada.')
+  }
+  return avaliacao
+}
+
+function detalheMock(avaliacao) {
+  return structuredClone({
+    ...avaliacao,
+    questoes: avaliacao.questoes.map((item) => ({
+      ...item,
+      questao: questoesMock.find((q) => q.idQuestao === item.idQuestao),
+    })),
+  })
+}
+
+export function listarAvaliacoes() {
+  return buscar('/api/avaliacoes', () =>
+    avaliacoesMock.map((a) => {
+      const { questoes: _, usuarios: __, ...resumo } = a
+      return structuredClone(resumo)
+    }),
+  )
+}
+
+export function buscarAvaliacao(idAvaliacao) {
+  return buscar(`/api/avaliacoes/${idAvaliacao}`, () => detalheMock(avaliacaoMock(idAvaliacao)))
+}
+
+export function cadastrarAvaliacao(avaliacao) {
+  return enviar('/api/avaliacoes', 'POST', avaliacao, () => {
+    const criador = usuariosMock.find((u) => u.idUsuario === avaliacao.idCriador)
+    const nova = {
+      ...avaliacao,
+      idAvaliacao: Math.max(0, ...avaliacoesMock.map((a) => a.idAvaliacao)) + 1,
+      nomeCriador: criador ? criador.nome : '',
+      questoes: [],
+      usuarios: [],
+    }
+    avaliacoesMock.push(nova)
+    return detalheMock(nova)
+  })
+}
+
+export function salvarQuestoesDaAvaliacao(idAvaliacao, itens) {
+  return enviar(`/api/avaliacoes/${idAvaliacao}/questoes`, 'PUT', itens, () => {
+    const avaliacao = avaliacaoMock(idAvaliacao)
+    avaliacao.questoes = structuredClone(itens)
+    return detalheMock(avaliacao)
+  })
+}
+
+export function salvarAlunosDaAvaliacao(idAvaliacao, idsUsuarios) {
+  return enviar(`/api/avaliacoes/${idAvaliacao}/usuarios`, 'PUT', idsUsuarios, () => {
+    const avaliacao = avaliacaoMock(idAvaliacao)
+    avaliacao.usuarios = [...idsUsuarios]
+    return [...avaliacao.usuarios]
   })
 }
 

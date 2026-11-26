@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import Login from './Login.jsx'
 import Menu from './Menu.jsx'
 import { telasDoUsuario } from './telas.js'
+import Avaliacoes from './avaliacoes/Avaliacoes.jsx'
 import Questoes from './questoes/Questoes.jsx'
 import Relatorios from './relatorios/Relatorios.jsx'
 
 const componentes = {
   questoes: Questoes,
+  avaliacoes: Avaliacoes,
   relatorios: Relatorios,
 }
 
@@ -64,7 +66,7 @@ function App() {
       {usuario && (
         <>
           <Menu usuario={usuario} telaAtual={tela} onTrocar={setTela} />
-          {Componente && <Componente />}
+          {Componente && <Componente usuario={usuario} />}
           {telaAberta && !Componente && (
             <section>
               <h2>{telaAberta.titulo}</h2>
