@@ -190,6 +190,11 @@ public class AvaliacaoController {
                     .body(Map.of("erro", "Esta avaliacao esta fora do horario permitido."));
         }
 
+        if (avaliacao.getQuestoes() == null || avaliacao.getQuestoes().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("erro", "Esta avaliacao ainda nao tem questoes."));
+        }
+
         List<Map<String, Object>> questoesSemGabarito = new ArrayList<>();
         for (AvaliacaoQuestao aq : avaliacao.getQuestoes()) {
             Questao q = aq.getQuestao();
@@ -257,6 +262,11 @@ public class AvaliacaoController {
         if (agora.isBefore(avaliacao.getDataInicio()) || agora.isAfter(avaliacao.getDataFim())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("erro", "Esta avaliacao esta fora do horario permitido."));
+        }
+
+        if (avaliacao.getQuestoes() == null || avaliacao.getQuestoes().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("erro", "Esta avaliacao ainda nao tem questoes."));
         }
 
         try {
