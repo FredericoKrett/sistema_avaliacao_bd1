@@ -19,11 +19,7 @@ public class RespostaDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    /**
-     * Registra em transacao as respostas enviadas pelo aluno (questoes em branco nao sao enviadas e valem zero),
-     * calcula automaticamente a nota das questoes de multipla escolha, deixa null nas de texto livre
-     * e preenche data_entrega em usuario_avaliacao.
-     */
+    // grava as respostas e ja calcula a nota das objetivas
     @Transactional
     public Map<String, Object> registrarRespostasAvaliacao(int idUsuario, int idAvaliacao, List<Resposta> respostas) {
         String sqlInsert = """
@@ -80,9 +76,7 @@ public class RespostaDAO {
         return resumo;
     }
 
-    /**
-     * Lista apenas respostas de texto livre ainda sem nota (nota_obtida IS NULL) de uma avaliacao.
-     */
+    // respostas de texto livre que ainda estao sem nota
     public List<Map<String, Object>> listarPendentesCorrecaoPorAvaliacao(int idAvaliacao) {
         String sql = """
                 SELECT r.id_resposta,

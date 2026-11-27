@@ -46,9 +46,6 @@ public class RelatorioDAO {
                 HAVING COUNT(DISTINCT ua.id_usuario) >= 1
                 ORDER BY a.data_inicio ASC
                 """;
-        if (turmas == null || turmas.isEmpty()) {
-            turmas = listarTurmas();
-        }
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("inicio", inicio)
                 .addValue("fim", fim)
@@ -151,11 +148,6 @@ public class RelatorioDAO {
                 ORDER BY a.data_inicio ASC
                 """;
         return paraCamelCase(jdbc.getJdbcTemplate().queryForList(sql));
-    }
-
-    private List<String> listarTurmas() {
-        return jdbc.getJdbcTemplate().queryForList(
-                "SELECT DISTINCT turma FROM usuario WHERE turma IS NOT NULL", String.class);
     }
 
     private List<Map<String, Object>> paraCamelCase(List<Map<String, Object>> linhas) {

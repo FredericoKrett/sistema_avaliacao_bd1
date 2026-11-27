@@ -1,9 +1,7 @@
--- Consultas SQL dos relatorios do sistema de avaliacoes (RF7)
+-- Consultas dos relatorios (RF7)
 
--- ============================================================================
--- Relatorio 1: Media de notas e desempenho por avaliacao (com filtro de periodo e turma)
--- Recursos SQL: JOIN, GROUP BY, SUM, AVG, COUNT, HAVING, WHERE com BETWEEN e IN, ORDER BY
--- ============================================================================
+-- Relatorio 1. Media das notas por avaliacao filtrando por periodo e turma
+-- usa JOIN, subconsulta, GROUP BY, SUM, AVG, COUNT, HAVING, BETWEEN, IN e ORDER BY
 SELECT
     a.id_avaliacao,
     a.titulo,
@@ -31,10 +29,8 @@ GROUP BY a.id_avaliacao, a.titulo, a.data_inicio
 HAVING COUNT(DISTINCT ua.id_usuario) >= 1
 ORDER BY a.data_inicio ASC;
 
--- ============================================================================
--- Relatorio 2: Evolucao de um aluno ao longo do tempo comparada a media da turma
--- Recursos SQL: JOIN, Subconsulta correlacionada, GROUP BY, SUM, AVG, ORDER BY
--- ============================================================================
+-- Relatorio 2. Notas de um aluno comparadas com a media da turma dele
+-- usa JOIN, subconsulta correlacionada, GROUP BY, SUM, AVG e ORDER BY
 SELECT
     a.id_avaliacao,
     a.titulo,
@@ -60,10 +56,8 @@ WHERE u.id_usuario = 3
 GROUP BY a.id_avaliacao, a.titulo, a.data_inicio, u.nome, u.turma
 ORDER BY a.data_inicio ASC;
 
--- ============================================================================
--- Relatorio 3: Ranking das 10 questoes com maior taxa de erro
--- Recursos SQL: JOIN, GROUP BY, COUNT, SUM, RANK(), ORDER BY, FETCH FIRST, WHERE com LIKE
--- ============================================================================
+-- Relatorio 3. As 10 questoes com mais erros
+-- usa JOIN, GROUP BY, COUNT, SUM, RANK, ORDER BY, FETCH FIRST e LIKE
 SELECT
     RANK() OVER (ORDER BY
         ROUND(100.0 * SUM(CASE WHEN COALESCE(r.nota_obtida, 0) < aq.valor THEN 1 ELSE 0 END) / COUNT(*), 2) DESC,
@@ -84,10 +78,8 @@ HAVING COUNT(*) >= 1
 ORDER BY percentual_erro DESC, total_respostas DESC
 FETCH FIRST 10 ROWS ONLY;
 
--- ============================================================================
--- Relatorio 4: Alunos pendentes por avaliacao e taxa de entrega (juncao externa)
--- Recursos SQL: LEFT JOIN, COUNT, GROUP BY, ORDER BY
--- ============================================================================
+-- Relatorio 4. Alunos que ainda nao entregaram cada avaliacao
+-- usa LEFT JOIN, COUNT, GROUP BY e ORDER BY
 SELECT
     a.id_avaliacao,
     a.titulo,
@@ -107,7 +99,7 @@ WHERE ua.data_entrega IS NULL
 GROUP BY a.id_avaliacao, a.titulo, u.id_usuario, u.nome, u.turma, ua.data_entrega
 ORDER BY a.id_avaliacao ASC, u.turma ASC, u.nome ASC;
 
--- Resumo de entregas vs pendencias por avaliacao (para o grafico do Relatorio 4)
+-- Relatorio 4. Total de entregues e pendentes para o grafico
 SELECT
     a.id_avaliacao,
     a.titulo,

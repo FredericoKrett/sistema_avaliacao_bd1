@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.uel.avaliacoes.dao.RelatorioDAO;
+import br.uel.avaliacoes.dao.UsuarioDAO;
 
 @RestController
 @RequestMapping("/api/relatorios")
 public class RelatorioController {
 
     private final RelatorioDAO relatorioDAO;
+    private final UsuarioDAO usuarioDAO;
 
-    public RelatorioController(RelatorioDAO relatorioDAO) {
+    public RelatorioController(RelatorioDAO relatorioDAO, UsuarioDAO usuarioDAO) {
         this.relatorioDAO = relatorioDAO;
+        this.usuarioDAO = usuarioDAO;
     }
 
     @GetMapping("/1")
@@ -27,6 +30,9 @@ public class RelatorioController {
             @RequestParam(defaultValue = "2000-01-01") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
             @RequestParam(defaultValue = "2100-12-31") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim,
             @RequestParam(required = false) List<String> turmas) {
+        if (turmas == null || turmas.isEmpty()) {
+            turmas = usuarioDAO.listarTurmas();
+        }
         return relatorioDAO.mediaPorAvaliacao(inicio.atStartOfDay(), fim.atTime(23, 59, 59), turmas);
     }
 
