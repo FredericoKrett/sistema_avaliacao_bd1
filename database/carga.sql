@@ -189,7 +189,7 @@ INSERT INTO avaliacao (titulo, descricao, data_inicio, data_fim, id_criador) VAL
 ('Avaliacao 2 - Ciencias da Natureza', 'Avaliacao sobre elementos quimicos, estados fisicos, biologia e corpo humano.', '2026-10-20 19:15:00', '2026-10-20 21:15:00', 1),
 ('Quiz - Historia e Literatura', 'Avaliacao sobre historia geral, historia do Brasil e literatura.', '2026-11-05 14:00:00', '2026-11-05 15:30:00', 2),
 ('Avaliacao Final - Informatica e Revisao Geral', 'Prova integradora cobrindo conceitos de informatica e revisao de temas anteriores.', '2026-11-18 19:15:00', '2026-11-18 21:15:00', 2),
-('Simulado - Revisao Geral', 'Simulado de revisao com questoes de todas as areas, aberto durante o dia 27/11.', '2026-11-27 08:00:00', '2026-11-27 23:59:00', 1);
+('Simulado 2 - Revisao Geral', 'Simulado de revisao com questoes de todas as areas, aberto durante o dia 27/11.', '2026-11-27 08:00:00', '2026-11-27 23:59:00', 1);
 
 -- Composicao das avaliacoes (questoes, ordem e valor)
 INSERT INTO avaliacao_questao (id_avaliacao, id_questao, ordem, valor) VALUES
