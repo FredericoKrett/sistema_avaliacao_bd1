@@ -141,6 +141,12 @@ public class AvaliacaoDAO {
     @Transactional
     public void substituirUsuarios(int idAvaliacao, List<Integer> idsUsuarios) {
         if (idsUsuarios == null || idsUsuarios.isEmpty()) {
+            Integer entregues = jdbcTemplate.queryForObject(
+                    "SELECT COUNT(*) FROM usuario_avaliacao WHERE id_avaliacao = ? AND data_entrega IS NOT NULL",
+                    Integer.class, idAvaliacao);
+            if (entregues != null && entregues > 0) {
+                throw new IllegalStateException("Nao da para tirar da avaliacao um aluno que ja entregou.");
+            }
             jdbcTemplate.update("DELETE FROM usuario_avaliacao WHERE id_avaliacao = ?", idAvaliacao);
             return;
         }
@@ -149,6 +155,12 @@ public class AvaliacaoDAO {
         List<Object> paramsDelete = new ArrayList<>();
         paramsDelete.add(idAvaliacao);
         paramsDelete.addAll(idsUsuarios);
+        Integer entregues = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM usuario_avaliacao WHERE id_avaliacao = ? AND data_entrega IS NOT NULL AND id_usuario NOT IN (" + placeholders + ")",
+                Integer.class, paramsDelete.toArray());
+        if (entregues != null && entregues > 0) {
+            throw new IllegalStateException("Nao da para tirar da avaliacao um aluno que ja entregou.");
+        }
         jdbcTemplate.update(
                 "DELETE FROM usuario_avaliacao WHERE id_avaliacao = ? AND id_usuario NOT IN (" + placeholders + ")",
                 paramsDelete.toArray()
