@@ -12,13 +12,13 @@ Cada questão possui um valor definido na avaliação. O sistema registra a nota
 
 ## Modelagem
 
-O diagrama entidade-relacionamento está em `docs/DER.png` e o esquema relacional em `docs/esquema.png`.
+O DER está em `docs/DER.png` e o esquema relacional em `docs/esquema.png`.
 
 ![DER](docs/DER.png)
 
 ![Esquema relacional](docs/esquema.png)
 
-**Terceira Forma Normal (3FN):** O esquema relacional está na 3FN porque todos os atributos possuem valores atômicos e monovalorados (1FN), todos os atributos não-chave nas tabelas com chave primária composta (`avaliacao_questao` e `usuario_avaliacao`) dependem funcionalmente de toda a chave composta e não apenas de parte dela (2FN), e nenhuma tabela possui dependência transitiva entre atributos não-chave ou atributos derivados redundantes, como a nota total da avaliação, que é obtida pela soma de `nota_obtida` em `resposta` (3FN).
+O esquema está na 3FN. Todos os atributos são atômicos. Nas tabelas com chave composta os atributos dependem da chave inteira. Não tem dependência transitiva. A nota total do aluno não é guardada porque sai da soma de `nota_obtida` em `resposta`.
 
 ## Como rodar
 
