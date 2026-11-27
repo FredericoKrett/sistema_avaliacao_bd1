@@ -120,6 +120,8 @@ public class AvaliacaoController {
                     .<ResponseEntity<?>>map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body(Map.of("erro", "Avaliacao nao encontrada.")));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("erro", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("erro", "Erro ao atualizar questoes: " + mensagemLimpa(e)));
         }
