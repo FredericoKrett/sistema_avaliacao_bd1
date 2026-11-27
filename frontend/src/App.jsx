@@ -27,6 +27,7 @@ function lerUsuarioSalvo() {
 function App() {
   const [usuario, setUsuario] = useState(lerUsuarioSalvo)
   const [tela, setTela] = useState(() => (usuario ? telasDoUsuario(usuario)[0].id : null))
+  const [versao, setVersao] = useState(0)
   const [health, setHealth] = useState(null)
   const [erro, setErro] = useState(null)
 
@@ -49,6 +50,11 @@ function App() {
     setTela(null)
   }
 
+  function trocarTela(id) {
+    setTela(id)
+    setVersao((v) => v + 1)
+  }
+
   const telaAberta = usuario ? telasDoUsuario(usuario).find((t) => t.id === tela) : null
   const Componente = telaAberta ? componentes[telaAberta.id] : null
 
@@ -69,8 +75,8 @@ function App() {
       {!usuario && <Login onEntrar={entrar} />}
       {usuario && (
         <>
-          <Menu usuario={usuario} telaAtual={tela} onTrocar={setTela} />
-          {Componente && <Componente usuario={usuario} />}
+          <Menu usuario={usuario} telaAtual={tela} onTrocar={trocarTela} />
+          {Componente && <Componente key={versao} usuario={usuario} />}
           {telaAberta && !Componente && (
             <section>
               <h2>{telaAberta.titulo}</h2>
