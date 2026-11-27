@@ -60,7 +60,7 @@ function RelatorioMedia() {
     <div>
       <p className="descricao">
         Média, menor e maior nota total dos alunos que entregaram cada avaliação no período, considerando só as turmas
-        marcadas.
+        marcadas. Respostas de texto livre ainda não corrigidas contam como zero.
       </p>
       <div className="filtros">
         <label htmlFor="inicio">De</label>

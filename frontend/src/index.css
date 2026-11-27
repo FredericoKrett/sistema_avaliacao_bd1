@@ -415,3 +415,74 @@ tfoot td {
   align-items: center;
   gap: 6px;
 }
+
+.situacao {
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.situacao-aberta {
+  background: #e3effa;
+  color: #1b5e9e;
+}
+
+.situacao-entregue {
+  background: #e3f3e8;
+  color: #1b7a3d;
+}
+
+.situacao-futura,
+.situacao-encerrada {
+  background: #eef0f2;
+  color: #555;
+}
+
+.prova {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prova p {
+  margin: 8px 0;
+}
+
+.opcoes-prova {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.opcoes-prova .opcao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prova textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.confirmacao {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.confirmacao p {
+  margin: 4px 0;
+}
+
+.resposta-aluno {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-left: 3px solid #b9bfc4;
+  background: #f7f8f9;
+  white-space: pre-wrap;
+}

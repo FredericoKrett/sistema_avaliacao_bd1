@@ -70,3 +70,8 @@ export function formatarPeriodo(inicio, fim) {
   if (!inicio || !fim) return '-'
   return `${isoParaBr(inicio)}, das ${inicio.slice(11, 16)} às ${fim.slice(11, 16)}`
 }
+
+export function agoraIso(data = new Date()) {
+  const dois = (n) => String(n).padStart(2, '0')
+  return `${data.getFullYear()}-${dois(data.getMonth() + 1)}-${dois(data.getDate())}T${dois(data.getHours())}:${dois(data.getMinutes())}:${dois(data.getSeconds())}`
+}

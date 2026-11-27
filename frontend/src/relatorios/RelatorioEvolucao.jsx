@@ -39,6 +39,7 @@ function RelatorioEvolucao() {
     <div>
       <p className="descricao">
         Nota total do aluno em cada avaliação que ele respondeu, comparada com a média da turma dele na mesma avaliação.
+        Respostas de texto livre ainda não corrigidas contam como zero.
       </p>
       <div className="filtros">
         <label>

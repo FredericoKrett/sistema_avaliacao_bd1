@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react'
 import Login from './Login.jsx'
 import Menu from './Menu.jsx'
 import { telasDoUsuario } from './telas.js'
+import MinhasAvaliacoes from './alunos/MinhasAvaliacoes.jsx'
 import Avaliacoes from './avaliacoes/Avaliacoes.jsx'
+import Correcao from './correcao/Correcao.jsx'
 import Questoes from './questoes/Questoes.jsx'
 import Relatorios from './relatorios/Relatorios.jsx'
 
 const componentes = {
   questoes: Questoes,
   avaliacoes: Avaliacoes,
+  correcao: Correcao,
   relatorios: Relatorios,
+  'minhas-avaliacoes': MinhasAvaliacoes,
 }
 
 function lerUsuarioSalvo() {
