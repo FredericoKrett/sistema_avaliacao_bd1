@@ -10,6 +10,16 @@ Trabalho da disciplina de Banco de Dados I (UEL) - Prof. Dr. Anderson Paulo Avil
 Escolhemos a natureza avaliação de aprendizagem (provas, simulados, quizzes).
 Cada questão possui um valor definido na avaliação. O sistema registra a nota obtida em cada questão (calculada automaticamente nas questões objetivas e atribuída pelo professor nas questões de texto livre) e calcula a nota total de cada aluno.
 
+## Modelagem
+
+O diagrama entidade-relacionamento está em `docs/DER.png` e o esquema relacional em `docs/esquema.png`.
+
+![DER](docs/DER.png)
+
+![Esquema relacional](docs/esquema.png)
+
+**Terceira Forma Normal (3FN):** O esquema relacional está na 3FN porque todos os atributos possuem valores atômicos e monovalorados (1FN), todos os atributos não-chave nas tabelas com chave primária composta (`avaliacao_questao` e `usuario_avaliacao`) dependem funcionalmente de toda a chave composta e não apenas de parte dela (2FN), e nenhuma tabela possui dependência transitiva entre atributos não-chave ou atributos derivados redundantes, como a nota total da avaliação, que é obtida pela soma de `nota_obtida` em `resposta` (3FN).
+
 ## Como rodar
 
 Precisa de PostgreSQL, Java 21 e Node.js 20.19 ou mais novo.
@@ -29,7 +39,7 @@ cd backend
 DB_USER=seu_usuario DB_PASSWORD=sua_senha ./mvnw spring-boot:run
 ```
 
-Se o banco tiver outro nome use também `DB_URL=jdbc:postgresql://localhost:5432/nome_do_banco`. No Windows o comando é `mvnw.cmd` e as variáveis são definidas antes com `set`.
+Se o banco tiver outro nome use também `DB_URL=jdbc:postgresql://localhost:5432/nome_do_banco`. No Windows o comando é `mvnw.cmd` e as variáveis são definidas antes com `set` no CMD ou `$env:DB_USER="seu_usuario"; $env:DB_PASSWORD="sua_senha"` no PowerShell.
 
 3. Em outro terminal subir o frontend.
 

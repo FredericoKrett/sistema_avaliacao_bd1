@@ -83,6 +83,11 @@ public class AvaliacaoDAO {
 
     @Transactional
     public void adicionarQuestao(int idAvaliacao, int idQuestao, int ordem, BigDecimal valor) {
+        Integer respostas = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM resposta WHERE id_avaliacao = ?", Integer.class, idAvaliacao);
+        if (respostas != null && respostas > 0) {
+            throw new IllegalStateException("Nao da para mudar as questoes de uma avaliacao que ja tem respostas.");
+        }
         String sql = """
                 INSERT INTO avaliacao_questao (id_avaliacao, id_questao, ordem, valor)
                 VALUES (?, ?, ?, ?)
@@ -94,6 +99,9 @@ public class AvaliacaoDAO {
 
     @Transactional
     public void substituirQuestoes(int idAvaliacao, List<AvaliacaoQuestao> questoes) {
+        if (questoes == null || questoes.isEmpty()) {
+            throw new IllegalArgumentException("Adicione pelo menos uma questao.");
+        }
         Integer respostas = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM resposta WHERE id_avaliacao = ?", Integer.class, idAvaliacao);
         if (respostas != null && respostas > 0) {

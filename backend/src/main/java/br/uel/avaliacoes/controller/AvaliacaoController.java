@@ -92,6 +92,8 @@ public class AvaliacaoController {
             avaliacaoDAO.adicionarQuestao(id, idQuestao, ordem, valor);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(Map.of("mensagem", "Questao adicionada a avaliacao com sucesso."));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("erro", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("erro", "Erro ao adicionar questao: " + mensagemLimpa(e)));
         }

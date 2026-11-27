@@ -99,13 +99,17 @@ public class RelatorioDAO {
                 FROM questao q
                 INNER JOIN avaliacao_questao aq ON aq.id_questao = q.id_questao
                 INNER JOIN resposta r ON r.id_avaliacao = aq.id_avaliacao AND r.id_questao = aq.id_questao
-                WHERE LOWER(q.enunciado) LIKE :busca
+                WHERE LOWER(q.enunciado) LIKE :busca ESCAPE '\\'
                 GROUP BY q.id_questao, q.enunciado, q.tipo
                 HAVING COUNT(*) >= 1
                 ORDER BY percentual_erro DESC, total_respostas DESC
                 FETCH FIRST 10 ROWS ONLY
                 """;
-        String filtro = busca == null ? "%" : "%" + busca.toLowerCase() + "%";
+        String escapado = busca == null ? "" : busca.toLowerCase()
+                .replace("\\", "\\\\")
+                .replace("%", "\\%")
+                .replace("_", "\\_");
+        String filtro = escapado.isEmpty() ? "%" : "%" + escapado + "%";
         return paraCamelCase(jdbc.queryForList(sql, new MapSqlParameterSource("busca", filtro)));
     }
 

@@ -26,7 +26,8 @@ export function formatarData(iso) {
 }
 
 export function tituloCurto(titulo) {
-  return titulo.split(' - ')[0]
+  const curto = titulo.split(' - ')[0]
+  return curto.length > 24 ? `${curto.slice(0, 24)}…` : curto
 }
 
 export function brParaIso(texto) {
@@ -68,7 +69,12 @@ export function formatarDataHora(iso) {
 
 export function formatarPeriodo(inicio, fim) {
   if (!inicio || !fim) return '-'
-  return `${isoParaBr(inicio)}, das ${inicio.slice(11, 16)} às ${fim.slice(11, 16)}`
+  const dataInicio = isoParaBr(inicio)
+  const dataFim = isoParaBr(fim)
+  if (dataInicio !== dataFim) {
+    return `${dataInicio} ${inicio.slice(11, 16)} até ${dataFim} ${fim.slice(11, 16)}`
+  }
+  return `${dataInicio}, das ${inicio.slice(11, 16)} às ${fim.slice(11, 16)}`
 }
 
 export function agoraIso(data = new Date()) {

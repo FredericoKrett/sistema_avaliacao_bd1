@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,52 +20,82 @@ public class RespostaDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // grava as respostas e ja calcula a nota das objetivas
+    // grava as respostas de todas as questoes da avaliacao e calcula a nota das objetivas
     @Transactional
     public Map<String, Object> registrarRespostasAvaliacao(int idUsuario, int idAvaliacao, List<Resposta> respostas) {
+        String sqlQuestoesAvaliacao = """
+                SELECT aq.id_questao, aq.valor, q.tipo
+                FROM avaliacao_questao aq
+                INNER JOIN questao q ON q.id_questao = aq.id_questao
+                WHERE aq.id_avaliacao = ?
+                ORDER BY aq.ordem ASC
+                """;
         String sqlInsert = """
                 INSERT INTO resposta (id_usuario, id_avaliacao, id_questao, id_alternativa, texto_resposta, nota_obtida)
                 VALUES (?, ?, ?, ?, ?, ?)
                 """;
-
-        String sqlTipoQuestao = "SELECT tipo FROM questao WHERE id_questao = ?";
-        String sqlValorQuestao = "SELECT valor FROM avaliacao_questao WHERE id_avaliacao = ? AND id_questao = ?";
         String sqlAlternativaCorreta = "SELECT correta FROM alternativa WHERE id_alternativa = ? AND id_questao = ?";
+
+        record QuestaoAvaliacao(int idQuestao, BigDecimal valor, String tipo) {}
+        List<QuestaoAvaliacao> questoes = jdbcTemplate.query(sqlQuestoesAvaliacao, (rs, rowNum) ->
+                new QuestaoAvaliacao(
+                        rs.getInt("id_questao"),
+                        rs.getBigDecimal("valor"),
+                        rs.getString("tipo")
+                ), idAvaliacao);
+
+        Map<Integer, QuestaoAvaliacao> mapaQuestoes = new HashMap<>();
+        for (QuestaoAvaliacao qa : questoes) {
+            mapaQuestoes.put(qa.idQuestao(), qa);
+        }
+
+        Map<Integer, Resposta> enviadas = new HashMap<>();
+        if (respostas != null) {
+            for (Resposta r : respostas) {
+                if (r.getIdQuestao() == null || !mapaQuestoes.containsKey(r.getIdQuestao())) {
+                    throw new IllegalArgumentException("Questao invalida para esta avaliacao.");
+                }
+                if (enviadas.put(r.getIdQuestao(), r) != null) {
+                    throw new IllegalArgumentException("Questao repetida no envio.");
+                }
+            }
+        }
 
         BigDecimal notaObjetivas = BigDecimal.ZERO;
         int pendentesCorrecao = 0;
 
-        if (respostas != null) {
-            for (Resposta r : respostas) {
-                String tipo = jdbcTemplate.queryForObject(sqlTipoQuestao, String.class, r.getIdQuestao());
-                BigDecimal valorQuestao = jdbcTemplate.queryForObject(sqlValorQuestao, BigDecimal.class, idAvaliacao, r.getIdQuestao());
+        for (QuestaoAvaliacao qa : questoes) {
+            Resposta r = enviadas.get(qa.idQuestao());
+            Integer idAlternativa = null;
+            String textoResposta = null;
+            BigDecimal notaObtida;
 
-                Integer idAlternativa = null;
-                String textoResposta = null;
-                BigDecimal notaObtida = null;
-
-                if ("MULTIPLA_ESCOLHA".equals(tipo)) {
+            if ("MULTIPLA_ESCOLHA".equals(qa.tipo())) {
+                if (r != null && r.getIdAlternativa() != null) {
                     idAlternativa = r.getIdAlternativa();
-                    if (idAlternativa != null) {
-                        Boolean correta = jdbcTemplate.queryForObject(
-                                sqlAlternativaCorreta,
-                                Boolean.class,
-                                idAlternativa,
-                                r.getIdQuestao()
-                        );
-                        notaObtida = Boolean.TRUE.equals(correta) ? valorQuestao : BigDecimal.ZERO;
-                    } else {
-                        notaObtida = BigDecimal.ZERO;
-                    }
-                    notaObjetivas = notaObjetivas.add(notaObtida);
+                    Boolean correta = jdbcTemplate.queryForObject(
+                            sqlAlternativaCorreta,
+                            Boolean.class,
+                            idAlternativa,
+                            qa.idQuestao()
+                    );
+                    notaObtida = Boolean.TRUE.equals(correta) ? qa.valor() : BigDecimal.ZERO;
                 } else {
-                    textoResposta = r.getTextoResposta();
+                    notaObtida = BigDecimal.ZERO;
+                }
+                notaObjetivas = notaObjetivas.add(notaObtida);
+            } else {
+                String texto = (r != null && r.getTextoResposta() != null) ? r.getTextoResposta().trim() : "";
+                if (!texto.isEmpty()) {
+                    textoResposta = texto;
                     notaObtida = null;
                     pendentesCorrecao++;
+                } else {
+                    notaObtida = BigDecimal.ZERO;
                 }
-
-                jdbcTemplate.update(sqlInsert, idUsuario, idAvaliacao, r.getIdQuestao(), idAlternativa, textoResposta, notaObtida);
             }
+
+            jdbcTemplate.update(sqlInsert, idUsuario, idAvaliacao, qa.idQuestao(), idAlternativa, textoResposta, notaObtida);
         }
 
         String sqlEntrega = "UPDATE usuario_avaliacao SET data_entrega = CURRENT_TIMESTAMP WHERE id_usuario = ? AND id_avaliacao = ?";
@@ -108,7 +139,14 @@ public class RespostaDAO {
     }
 
     public int atribuirNotaDiscursiva(int idResposta, BigDecimal notaObtida) {
-        String sql = "UPDATE resposta SET nota_obtida = ? WHERE id_resposta = ?";
+        String sql = """
+                UPDATE resposta r
+                SET nota_obtida = ?
+                FROM questao q
+                WHERE r.id_resposta = ?
+                  AND q.id_questao = r.id_questao
+                  AND q.tipo = 'TEXTO_LIVRE'
+                """;
         return jdbcTemplate.update(sql, notaObtida, idResposta);
     }
 }
